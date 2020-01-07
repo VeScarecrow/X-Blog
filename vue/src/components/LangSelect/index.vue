@@ -23,6 +23,7 @@
                 this.$i18n.locale = lang;
                 this.$store.dispatch('setLanguage', lang);
                 this.$message({
+                    showClose: true,
                     message: this.$i18n.locale === 'zh' ? '更换语言成功' : 'Switch Language Success',
                     type: 'success'
                 })

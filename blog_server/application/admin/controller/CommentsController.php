@@ -12,20 +12,34 @@ use app\common\model\Comments;
 use app\common\model\Links;
 use think\Controller;
 use think\Db;
-use app\common\validate\CommentsValidate;
 
+/**
+ * 评论管理接口
+ * Class CommentsController
+ * @package app\admin\controller
+ */
 class CommentsController extends Controller
 {
+    /**
+     * 有限查询
+     * @return \think\response\Json
+     */
     public function findAll()
     {
         try {
-            $list = Comments::limit(8)->select();
+            $list = Comments::limit(10)->field(['id','content','author','time'])->select();
             return json(Result::success($list)->toJson());
         } catch (\Exception $e) {
             return json(Result::innerError()->toJson());
         }
     }
 
+    /**
+     * 分页查询
+     * @param int $pageCode 页码
+     * @param int $pageSize 每页数量
+     * @return \think\response\Json
+     */
     public function findByPage($pageCode = 1, $pageSize = 10)
     {
         try {
@@ -37,20 +51,36 @@ class CommentsController extends Controller
         }
     }
 
+    /**
+     * 新增
+     * @return \think\response\Json
+     */
     public function save()
     {
         try {
-            Comments::create(input('post.'))->allowField(true);
-            return json(Result::success()->toJson());
+            $input = input('post.');
+            if (!input('?post.url') || input('post.url') == '') {
+                $hash_id = $this->request->ip() . input('post.author');
+                $url = abs(crc32($hash_id)) % 29 + 1;
+                $input['url'] = 'http://xcoding.com:8080/static/icons/' . $url . '.png';
+            }
+            Comments::create($input)->allowField(true);
+            return json(Result::success($input)->toJson());
         } catch (\Exception $e) {
             return json(Result::innerError()->toJson());
         }
     }
 
+    /**
+     * 查询文章评论，并封装树形列表
+     * @param int $articleId 文章id
+     * @param int $sort 评论分类：0默认文章详情页，1友链页，2关于我页
+     * @param int $pageCode 页码
+     * @param int $pageSize 每页数量
+     * @return \think\response\Json
+     */
     public function findCommentsList($articleId, $sort = 0, $pageCode = 1, $pageSize = 10)
     {
-
-
         try {
             Db::startTrans();
             //查询该文章的所有父级留言信息
@@ -80,7 +110,7 @@ class CommentsController extends Controller
                     array_push($commentsDTOS, $commentsDTO->toJson());
                 }
             }
-            $total = ceil($page->total()/$pageSize);
+            $total = ceil($page->total() / $pageSize);
             Db::commit();
             //最后一页无数据残留的问题
             if ($total < ($pageCode * $pageSize - 1)) {
@@ -95,11 +125,14 @@ class CommentsController extends Controller
         }
     }
 
-
+    /**
+     * 通过id删除
+     * @return \think\response\Json
+     */
     public function deleteById()
     {
         try {
-            $ids = input('post.ids');
+            $ids = input('post.');
             if (!is_array($ids)) {
                 $ids = array($ids);
             }
@@ -112,4 +145,6 @@ class CommentsController extends Controller
             return json(Result::innerError()->toJson());
         }
     }
+
+
 }

@@ -1,13 +1,14 @@
 <template>
     <div class="comment-container">
         <div id="comments" ref="comments" class="clearfix">
-            <span class="response"></span>
+            <span class="response"/>
             <!-- 表单 -->
             <div id="comment-form" class="comment-form">
                 <input maxlength="12" v-model="comments.author" class="form-control input-control clearfix" placeholder="姓名 (*)" value="" required/>
                 <input type="email" v-model="comments.email" class="form-control input-control clearfix" placeholder="邮箱 (*)" value="" required/>
                 <input type="url" v-model="comments.url" class="form-control input-control clearfix" placeholder="网址 (http://)" value=""/>
-                <textarea v-model="comments.content" class="form-control" :placeholder="holder" required minlength="5" maxlength="2000"></textarea>
+                <textarea v-model="comments.content" class="form-control" :placeholder="holder" required minlength="5"
+                          maxlength="2000"/>
                 <button type="button" class="submit" @click="subComment">提交</button>
             </div>
             <!-- 列表 -->
@@ -16,7 +17,7 @@
                     <div :id="'comment-' + comment.parent.id">
                         <div class="comment-view">
                             <div class="comment-header">
-                                <img class="avatar" src="http://cdn.tycoding.cn/author.png" width="80" height="80">
+                                <img class="avatar" src="" width="80" height="80">
                                 <span class="comment-author">
                                     <a :href="comment.parent.url" target="_blank" rel="external nofollow" v-text="comment.parent.author"></a>
                                 </span>
@@ -39,7 +40,7 @@
                                 <div :id="'comment-' + item.id">
                                     <div class="comment-view">
                                         <div class="comment-header">
-                                            <img class="avatar" src="http://cdn.tycoding.cn/author.png" width="80" height="80">
+                                            <img class="avatar" src="" width="80" height="80">
                                             <span class="comment-author comment-by-author">
                                                 <a :href="item.url" target="_blank" rel="external nofollow" v-text="item.author"></a>
                                             </span>
@@ -119,7 +120,7 @@
         },
         watch: {
             $route(to, from) {
-                console.log('经过了');
+                // console.log('经过了');
                 this.listQuery.pageCode = getUrlKey('cp');
                 this.findCommentsList();
             },

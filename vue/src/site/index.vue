@@ -87,7 +87,6 @@
                 }
                 findByPageForSite(this.listQuery.pageCode, this.listQuery.pageSize).then(response => {
                     if (response.code === 20000) {
-                        console.log(response);
                         this.list = response.data.rows;
                         this.total = Math.ceil(response.data.total/this.listQuery.pageSize);
                         this.listLoading = false

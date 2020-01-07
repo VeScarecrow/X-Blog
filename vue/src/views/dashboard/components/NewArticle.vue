@@ -1,18 +1,18 @@
 <template>
-    <el-table :data="list" style="width: 100%;padding-top: 15px;">
-        <el-table-column label="标题" min-width="200">
+    <el-table :data="list" style="width: 100%;padding-top: 15px;" max-height="600">
+        <el-table-column label="标题" min-width="120" show-tooltip-when-overflow>
             <template slot-scope="scope">
                 <router-link :to="'/article/' + (scope.row.id)" target="_blank">{{scope.row.title}}</router-link>
             </template>
         </el-table-column>
-        <el-table-column label="分类" width="195" align="center">
+        <el-table-column label="分类" min-width="80" align="center" show-tooltip-when-overflow>
             <template slot-scope="scope">
-                {{ scope.row.category }}
+                <el-tag type="success">{{ scope.row.category }}</el-tag>
             </template>
         </el-table-column>
-        <el-table-column label="浏览量" width="100" align="center">
+        <el-table-column label="浏览量" min-width="50" align="center">
             <template slot-scope="scope">
-                <el-tag> {{ scope.row.eye_count }}</el-tag>
+                <el-tag type="primary"> {{ scope.row.eye_count }}</el-tag>
             </template>
         </el-table-column>
     </el-table>
@@ -36,7 +36,7 @@
         },
         data() {
             return {
-                list: null
+                list: []
             }
         },
         created() {
@@ -45,7 +45,9 @@
         methods: {
             fetchData() {
                 findAllArticle().then(response => {
-                    this.list = response.data
+                    if (response.code === 20000) {
+                        this.list = response.data
+                    }
                 })
             }
         }

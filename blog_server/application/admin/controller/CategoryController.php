@@ -12,9 +12,20 @@ use think\Controller;
 use think\Db;
 use app\common\validate\CategoryValidate;
 
+/**
+ * 文章分类管理接口
+ * Class CategoryController
+ * @package app\admin\controller
+ */
 class CategoryController extends Controller
 {
 
+    /**
+     * 分页查询
+     * @param int $pageCode 页码
+     * @param int $pageSize 每页数量
+     * @return \think\response\Json
+     */
     public function findByPage($pageCode = 1, $pageSize = 10)
     {
         try {
@@ -26,11 +37,14 @@ class CategoryController extends Controller
         }
     }
 
-
+    /**
+     * 通过id删除
+     * @return \think\response\Json
+     */
     public function deleteById()
     {
         try {
-            $ids = input('post.ids');
+            $ids = input('post.');
             if (!is_array($ids)) {
                 $ids = array($ids);
             }
@@ -49,6 +63,10 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * 新增
+     * @return \think\response\Json
+     */
     public function save()
     {
 
@@ -58,12 +76,16 @@ class CategoryController extends Controller
                 Category::create(['name' => $name]);
                 return json(Result::success()->toJson());
             }
-            return json(Result::repError());
+            return json(Result::repError()->toJson());
         } catch (\Exception $e) {
             return json(Result::innerError()->toJson());
         }
     }
 
+    /**
+     * 更新
+     * @return \think\response\Json
+     */
     public function update()
     {
 
@@ -79,5 +101,23 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * 通过标题查找
+     * @param string $title
+     * @return \think\response\Json
+     */
+    public function findByName($title = '')
+    {
+        try {
+            $list = Category::where('name', 'like', '%' . $title . '%')->limit(30)->select();
+            $name_arr = array();
+            foreach ($list as $item) {
+                array_push($name_arr, $item->name);
+            }
+            return json(Result::success($name_arr)->toJson());
+        } catch (\Exception $e) {
+            return json(Result::innerError()->toJson());
+        }
+    }
 
 }

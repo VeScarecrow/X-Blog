@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+
 //findAll,deleteById,save
 export function findAll() {
     return request({
@@ -40,3 +41,12 @@ export function deleteById(ids) {
         data: ids
     })
 }
+
+export function update(obj) {
+    return request({
+        url: '/links/update',
+        method: 'post',
+        data: obj
+    })
+}
+

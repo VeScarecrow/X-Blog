@@ -5,22 +5,22 @@
         </div>
         <div style="position:relative;">
             <pan-thumb :image="avatar" class="panThumb"/>
-            <mallki class-name="mallki-text" text="tumo-vue-admin"/>
+            <mallki class-name="mallki-text" text="X-Blog by X&T"/>
             <div style="padding-top:35px;" class="progress-item">
-                <span>Java</span>
-                <el-progress :percentage="10"/>
-            </div>
-            <div class="progress-item">
                 <span>Vue</span>
-                <el-progress :percentage="30"/>
+                <el-progress :percentage="57.0" :stroke-width="5"/>
             </div>
             <div class="progress-item">
-                <span>Spring</span>
-                <el-progress :percentage="12"/>
+                <span>JavaScript</span>
+                <el-progress :percentage="18.5" :stroke-width="5" color="#13ce66"/>
             </div>
             <div class="progress-item">
-                <span>HTML</span>
-                <el-progress :percentage="100" status="success"/>
+                <span>PHP</span>
+                <el-progress :percentage="12.5" :stroke-width="5" color="#ff4949"/>
+            </div>
+            <div class="progress-item">
+                <span>CSS</span>
+                <el-progress :percentage="11.9" :stroke-width="5" color="#838383"/>
             </div>
         </div>
     </el-card>
@@ -73,23 +73,28 @@
         .box-card-header {
             position: relative;
             height: 220px;
+
             img {
                 width: 100%;
                 height: 100%;
                 transition: all 0.2s linear;
+
                 &:hover {
                     transform: scale(1.1, 1.1);
                     filter: contrast(130%);
                 }
             }
         }
+
         .mallki-text {
             position: absolute;
             top: 0px;
             right: 0px;
             font-size: 20px;
+            line-height: 30px;
             font-weight: bold;
         }
+
         .panThumb {
             z-index: 100;
             height: 70px !important;
@@ -101,14 +106,17 @@
             background-color: #fff;
             margin: auto;
             box-shadow: none !important;
+
             /deep/ .pan-info {
                 box-shadow: none !important;
             }
         }
+
         .progress-item {
             margin-bottom: 10px;
             font-size: 14px;
         }
+
         @media only screen and (max-width: 1510px) {
             .mallki-text {
                 display: none;

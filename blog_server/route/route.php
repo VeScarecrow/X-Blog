@@ -10,72 +10,102 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
-
-//Route::get('hello/:name', 'index/hello');
-//Route::rule('user/info', 'admin/UserController/getUserInfo', 'get|post')
-//    ->header('Access-Control-Allow-Origin', '*')
-//    ->header('Access-Control-Allow-Headers', '*')
-//    ->header('Access-Control-Allow-Methods', '*')
-//    ->allowCrossDomain();
-;
-
 Route::group('', function () {
+    /**
+     * 文章模块
+     */
+    Route::group('article', function () {
+        Route::rule('/findAll', '/findAll', 'get|post');
 
-    Route::rule('article/findAll', 'admin/ArticleController/findAll', 'get|post');
+        Route::rule('/findById', '/findById', 'get|post');
 
-    Route::rule('article/findById', 'admin/ArticleController/findById', 'get|post');
+        Route::rule('/findByPage', '/findByPage?site=backed', 'get|post');
 
-    Route::rule('article/findByPage', 'admin/ArticleController/findByPage', 'get|post');
+        Route::rule('/findByPageForSite', '/findByPage?site=fronted', 'get|post');
 
-    Route::rule('article/findByPageForSite', 'admin/ArticleController/findByPage', 'get|post');
+        Route::rule('/save', '/save', 'get|post');
 
-    Route::rule('article/save', 'admin/ArticleController/save', 'get|post');
+        Route::rule('/update', '/update', 'get|post');
 
-    Route::rule('article/update', 'admin/ArticleController/update', 'get|post');
+        Route::rule('/search', '/search', 'get|post');
 
-    Route::rule('article/search', 'admin/ArticleController/search', 'get|post');
+        Route::rule('/delete', '/deleteById', 'get|post');
 
-    Route::rule('article/delete', 'admin/ArticleController/deleteById', 'get|post');
+        Route::rule('/findArchives', '/findArchives', 'get|post');
 
-    Route::rule('article/findArchives', 'admin/ArticleController/findArchives', 'get|post');
+        Route::rule('/findCountByArticleId', '/findCountByArticleId', 'get|post');
+    })->prefix('admin/ArticleController');
 
-    Route::rule('article/findCountByArticleId', 'admin/ArticleController/findCountByArticleId', 'get|post');
+    /**
+     * 文章分类模块
+     */
+    Route::group('category', function () {
+        Route::rule('/findByPage', '/findByPage', 'get|post');
 
-    Route::rule('category/findByPage', 'admin/CategoryController/findByPage', 'get|post');
+        Route::rule('/delete', '/deleteById', 'get|post');
 
-    Route::rule('category/delete', 'admin/CategoryController/deleteById', 'get|post');
+        Route::rule('/save', '/save', 'get|post');
 
-    Route::rule('category/save', 'admin/CategoryController/save', 'get|post');
+        Route::rule('/update', '/update', 'get|post');
 
-    Route::rule('category/update', 'admin/CategoryController/update', 'get|post');
+        Route::rule('/findByName', '/findByName', 'get|post');
+    })->prefix('admin/CategoryController');
 
-    Route::rule('links/findAll', 'admin/LinksController/findAll', 'get|post');
+    /**
+     * 文章链接模块
+     */
+    Route::group('links', function () {
+        Route::rule('/findAll', '/findAll', 'get|post');
 
-    Route::rule('links/delete', 'admin/LinksController/deleteById', 'get|post');
+        Route::rule('/findByPage', '/findByPage', 'get|post');
 
-    Route::rule('links/save', 'admin/LinksController/save', 'get|post');
+        Route::rule('/delete', '/deleteById', 'get|post');
 
-    Route::rule('comments/findAll', 'admin/CommentsController/findAll', 'get|post');
+        Route::rule('/save', '/save', 'get|post');
 
-    Route::rule('comments/findByPage', 'admin/CommentsController/findByPage', 'get|post');
+        Route::rule('/update', '/update', 'get|post');
+    })->prefix('admin/LinksController');
 
-    Route::rule('comments/save', 'admin/CommentsController/save', 'get|post');
+    /**
+     * 文章评论模块
+     */
+    Route::group('comments', function () {
+        Route::rule('/findAll', '/findAll', 'get|post');
 
-    Route::rule('comments/findCommentsList', 'admin/CommentsController/findCommentsList', 'get|post');
+        Route::rule('/findByPage', '/findByPage', 'get|post');
 
-    Route::rule('comments/delete', 'admin/CommentsController/deleteById', 'get|post');
+        Route::rule('/save', '/save', 'get|post');
 
-    Route::rule('tags/findByPage', 'admin/TagsController/findByPage', 'get|post');
+        Route::rule('/findCommentsList', '/findCommentsList', 'get|post');
 
-    Route::rule('tags/save', 'admin/TagsController/save', 'get|post');
+        Route::rule('/delete', '/deleteById', 'get|post');
+    })->prefix('admin/CommentsController');
 
-    Route::rule('tags/update', 'admin/TagsController/update', 'get|post');
+    /**
+     * 文章标签模块
+     */
+    Route::group('tags', function () {
+        Route::rule('/findByPage', '/findByPage', 'get|post');
 
-    Route::rule('tags/delete', 'admin/TagsController/deleteById', 'get|post');
+        Route::rule('/save', '/save', 'get|post');
 
+        Route::rule('/update', '/update', 'get|post');
+
+        Route::rule('/delete', '/deleteById', 'get|post');
+    })->prefix('admin/TagsController');
+
+    /**
+     * 文件上传/下载模块
+     */
+    Route::group('storage', function () {
+        Route::rule('/upload', '/upload');
+
+        Route::rule('/download/:url', '/download');
+    })->prefix('admin/UploadController');
+
+    /**
+     * 登陆验证模块
+     */
     Route::rule('admin/login', 'admin/UserController/login', 'get|post');
 
     Route::rule('user/info', 'admin/UserController/getUserInfo');

@@ -13,8 +13,19 @@ use think\Controller;
 use think\Db;
 use app\common\validate\TagsValidate;
 
+/**
+ * 标签管理接口
+ * Class TagsController
+ * @package app\admin\controller
+ */
 class TagsController extends Controller
 {
+    /**
+     * 分页查询
+     * @param int $pageCode 页码
+     * @param int $pageSize 每页数量
+     * @return \think\response\Json
+     */
     public function findByPage($pageCode = 1, $pageSize = 10)
     {
         try {
@@ -26,6 +37,10 @@ class TagsController extends Controller
         }
     }
 
+    /**
+     * 新增
+     * @return \think\response\Json
+     */
     public function save()
     {
         try {
@@ -34,12 +49,16 @@ class TagsController extends Controller
                 Tags::create(['name' => $name]);
                 return json(Result::success()->toJson());
             }
-            return json(Result::repError());
+            return json(Result::repError()->toJson());
         } catch (\Exception $e) {
             return json(Result::innerError()->toJson());
         }
     }
 
+    /**
+     * 更新
+     * @return \think\response\Json
+     */
     public function update()
     {
         try {
@@ -54,17 +73,21 @@ class TagsController extends Controller
         }
     }
 
+    /**
+     * 通过id删除
+     * @return \think\response\Json
+     */
     public function deleteById()
     {
         try {
-            $ids = input('post.ids');
+            $ids = input('post.');
             if (!is_array($ids)) {
                 $ids = array($ids);
             }
             Db::startTrans();
             Tags::destroy($ids);
             Db::commit();
-            return json(Result::success()->toJson());
+            return json(Result::success($ids)->toJson());
         } catch (\Exception $e) {
             Db::rollback();
             return json(Result::innerError()->toJson());

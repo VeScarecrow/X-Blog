@@ -17,13 +17,16 @@ export function findById(id) {
     })
 }
 
-export function findByPage(pageCode, pageSize) {
+export function findByPage(pageCode, pageSize ,begin_time,end_time,title) {
     return request({
         url: '/article/findByPage',
         method: 'post',
         params: {
             pageCode,
-            pageSize
+            pageSize,
+            begin_time,
+            end_time,
+            title
         }
     })
 }
@@ -60,7 +63,7 @@ export function search(title) {
         url: '/article/search',
         method: 'get',
         params: {
-            'title':title
+            'title': title
         }
     })
 }

@@ -15,14 +15,6 @@ npm run dev
 npm run build:prod
 ```
 
-演示地址：[tumo-vue.tycoding.cn](http://tumo-vue.tycoding.cn/)
-
-后台地址：[tumo-vue.tycoding.cn/login](http://tumo-vue.tycoding.cn/login)
-
-
-![](http://cdn.tycoding.cn/tumo-vue-002.png)
-
-
 # Notes
 
 > 父组件如何给子组件传值？

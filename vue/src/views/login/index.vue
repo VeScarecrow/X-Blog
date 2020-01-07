@@ -10,7 +10,8 @@
                 <span class="svg-container">
                   <svg-icon icon-class="user"/>
                 </span>
-                <el-input v-model="loginForm.username" @click.native.stop="greeting" name="username" type="text" auto-complete="on" placeholder="username"/>
+                <el-input v-model="loginForm.username" @click.native.stop="greeting" name="username" type="text"
+                          auto-complete="on" placeholder="username"/>
             </el-form-item>
             <el-form-item prop="password">
                 <span class="svg-container">
@@ -34,22 +35,21 @@
                 </el-button>
             </el-form-item>
             <div class="tips">
-<!--                <span style="margin-right:20px;">username: tycoding</span>-->
-<!--                <span> password: 123456</span>-->
+                <!--                <span style="margin-right:20px;">username: tycoding</span>-->
+                <!--                <span> password: 123456</span>-->
             </div>
         </el-form>
     </div>
 </template>
 
 <script>
-    import {isvalidUsername} from '@/utils/validate'
 
     export default {
         name: 'Login',
         data() {
             const validateUsername = (rule, value, callback) => {
-                if (!isvalidUsername(value)) {
-                    callback(new Error('请输入正确的用户名'))
+                if (value.length === 0) {
+                    callback(new Error('请输入用户名'))
                 } else {
                     callback()
                 }
@@ -70,7 +70,7 @@
                 bear: 'http://cdn.tycoding.cn/normal.0447fe9.png',
 
                 loginForm: {
-                    username: 'www',
+                    username: 'Xian',
                     password: '123456'
                 },
                 loginRules: {
@@ -138,6 +138,7 @@
             display: inline-block;
             height: 47px;
             width: 85%;
+
             input {
                 background: transparent;
                 border: 0px;
@@ -145,16 +146,19 @@
                 border-radius: 0px;
                 padding: 12px 5px 12px 15px;
                 height: 47px;
+
                 &:-webkit-autofill {
                     -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
                     -webkit-text-fill-color: #fff !important;
                 }
             }
         }
+
         .el-form-item {
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 5px;
             color: #454545;
+
             .el-form-item__content {
                 border-bottom: 1px solid #dcdfe6;
             }
@@ -173,6 +177,7 @@
         width: 100%;
         background-color: #b8e5f8;
         background-image: url("http://cdn.tycoding.cn/db29b0fbd2f78dd8c1b7.db29b0f.png");
+
         .login-form {
             position: absolute;
             left: 0;
@@ -183,7 +188,7 @@
             margin: 120px auto;
             background-color: #fff;
 
-            div>img{
+            div > img {
                 position: absolute;
                 top: 0;
                 left: 50%;
@@ -193,21 +198,25 @@
                 z-index: 1;
             }
         }
+
         .tips {
             font-size: 14px;
             margin-bottom: 10px;
+
             span {
                 &:first-of-type {
                     margin-right: 16px;
                 }
             }
         }
+
         .svg-container {
             padding: 6px 5px 6px 15px;
             vertical-align: middle;
             width: 30px;
             display: inline-block;
         }
+
         .title {
             font-size: 26px;
             font-weight: 400;
@@ -216,6 +225,7 @@
             text-align: center;
             font-weight: bold;
         }
+
         .show-pwd {
             position: absolute;
             right: 10px;

@@ -1,12 +1,10 @@
 <template>
     <div class="api-container">
-        <el-alert title="注意：目前博客登录、用户接口不够规范，后期会再完善。前端所有的请求接口都在`/src/vue/api/`中定义。所有的后端接口都只返回JSON格式数据，可用postman等工具查询接口返回数据格式" type="error"></el-alert>
-        <br/>
-        <el-alert title="为博客前台服务的接口，即根路径下的路由" type="success" show-icon :closable="false"></el-alert>
+        <el-alert title="为博客前台服务的接口，即根路径下的路由" type="success" show-icon :closable="false"/>
         <el-collapse>
             <el-collapse-item v-for="list in doc_site" :key="list.id">
                 <template slot="title">
-                    <i class="header-icon el-icon-info"></i>
+                    <i class="header-icon el-icon-info"/>
                     {{list.title}}
                 </template>
                 <div class="tips-item" v-for="item in list.data" :key="item.id">
@@ -16,11 +14,11 @@
             </el-collapse-item>
         </el-collapse>
         <br/>
-        <el-alert title="博客后端，即`/admin`下的路由" type="success" show-icon :closable="false"></el-alert>
+        <el-alert title="博客后端，即`/admin`下的路由" type="success" show-icon :closable="false"/>
         <el-collapse>
             <el-collapse-item v-for="list in doc_admin" :key="list.id">
                 <template slot="title">
-                    <i class="header-icon el-icon-info"></i>
+                    <i class="header-icon el-icon-info"/>
                     {{list.title}}
                 </template>
                 <div class="tips-item" v-for="item in list.data" :key="item.id">

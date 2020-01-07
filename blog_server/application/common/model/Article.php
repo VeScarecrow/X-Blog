@@ -13,14 +13,7 @@ class Article extends Model
      * test 自动完成
      */
     protected $insert = [
-        'title' => 'x',
-        'title_pic' => 'x',
-        'author' => 'x',
-        'content' => 'x',
-        'content_md' => 'x',
-        'origin' => 'x',
-        'state' => '0',
-        'eye_count' => 100,
+        'eye_count' => 0,
     ];
 
     /**
@@ -85,7 +78,7 @@ class Article extends Model
     public function setStateAttr($value, $data)
     {
         $stateText = ['deleted' => '0', 'draft' => '1', 'published' => '2'];
-        return $stateText['published'];
+        return $stateText[$value];
     }
 
     //date('Y-m-d H:i:s', 1502204401)

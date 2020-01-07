@@ -1,5 +1,5 @@
 <template>
-  <a href="https://github.com/TyCoding/tumo-vue" target="_blank" class="github-corner" aria-label="View source on Github">
+  <a href="https://github.com/Xiant999/X-Blog" target="_blank" class="github-corner" aria-label="View source on Github">
     <svg
       width="80"
       height="80"
