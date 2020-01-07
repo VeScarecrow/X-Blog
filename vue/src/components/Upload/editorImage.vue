@@ -13,9 +13,10 @@
                 :on-success="handleSuccess"
                 :before-upload="beforeUpload"
                 class="editor-slide-upload"
-                action="http://127.0.0.1:8084/qiniu/upload"
+                action="http://xcoding.com:8080/storage/upload"
                 list-type="picture-card">
-                <i class="el-icon-upload"></i>
+                <i class="el-icon-upload"/>
+                <div slot="tip" class="el-upload__tip">只能上传jpg,png,jpeg,gif文件,最多10张</div>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             </el-upload>
             <el-button @click="dialogVisible = false">取 消</el-button>
@@ -25,7 +26,7 @@
 </template>
 
 <script>
-    // import { getToken } from 'api/storage'
+    import imageConversion from 'image-conversion'
 
     export default {
         name: 'editorImage',
@@ -62,7 +63,7 @@
                 const objKeyArr = Object.keys(this.listObj)
                 for (let i = 0, len = objKeyArr.length; i < len; i++) {
                     if (this.listObj[objKeyArr[i]].uid === uid) {
-                        this.listObj[objKeyArr[i]].url = response.data.url
+                        this.listObj[objKeyArr[i]].url = response.data
                         this.listObj[objKeyArr[i]].hasSuccess = true
                         return
                     }
@@ -79,14 +80,40 @@
                 }
             },
             beforeUpload(file) {
+                if (this.fileList.length > 10) {
+                    this.fileList.splice(-10);
+                    this.$message({
+                        message: '最多上传10张',
+                        type: 'warning'
+                    })
+                }
                 const _self = this
                 const _URL = window.URL || window.webkitURL
                 const fileName = file.uid
+                const isLt1M = file.size / 1024 / 1024 > 1 //图片大于1M
                 this.listObj[fileName] = {}
                 return new Promise((resolve, reject) => {
+                    // if (_self.fileList.length > 10) {
+                    //     _self.fileList.splice(-10);
+                    //     _self.$message({
+                    //         message: '最多上传10张',
+                    //         type: 'warning'
+                    //     })
+                    //     reject();
+                    // }
                     const img = new Image()
                     img.src = _URL.createObjectURL(file)
                     img.onload = function () {
+                        if (isLt1M) {
+                            //如超过则压缩
+                            imageConversion.compressAccurately(file, {
+                                size: 100,
+                                width: 1920,
+                                height: 1080
+                            }).then(res => {
+                                // resolve(res)
+                            })
+                        }
                         _self.listObj[fileName] = {
                             hasSuccess: false,
                             uid: file.uid,
@@ -101,14 +128,16 @@
     }
 </script>
 <style rel="stylesheet/scss" lang="scss">
-    .el-upload--picture-card{
+    .el-upload--picture-card {
         line-height: 27px;
     }
-    .el-upload-dragger{
+
+    .el-upload-dragger {
         border: none;
         height: 146px !important;
     }
-    .el-upload-dragger .el-icon-upload{
+
+    .el-upload-dragger .el-icon-upload {
         line-height: 0;
         margin: 52px 0 16px;
     }
@@ -116,6 +145,7 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
     .editor-slide-upload {
         margin-bottom: 20px;
+
         /deep/ .el-upload--picture-card {
             width: 100%;
         }

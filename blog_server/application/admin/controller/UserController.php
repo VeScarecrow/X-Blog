@@ -9,8 +9,17 @@ use app\common\model\User;
 use think\Controller;
 use think\Exception;
 
+/**
+ * 用户验证接口
+ * Class UserController
+ * @package app\admin\controller
+ */
 class UserController extends Controller
 {
+    /**
+     * 登陆
+     * @return \think\response\Json
+     */
     public function login()
     {
         try {
@@ -28,6 +37,11 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 验证token
+     * @param $token
+     * @return \think\response\Json
+     */
     public function getUserInfo($token)
     {
         try {

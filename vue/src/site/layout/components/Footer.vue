@@ -4,12 +4,10 @@
             <div class="footer-social">
                 <div class="footer-container clearfix">
                     <div class="social-list">
-                        <a class="social weibo" target="blank" href="https://www.jianshu.com/u/5d9842cdf684">简书</a>
+                        <a class="social weibo" target="blank" href="https://www.jianshu.com">简书</a>
                         <a class="social zhihu" target="blank"
-                           href="https://www.zhihu.com/people/tomo-83-82/activities">知乎</a>
-                        <a class="social github" target="blank" href="https://github.com/TyCoding">Github</a>
-                        <a class="social rss" target="blank" href="/">RSS</a>
-                        <a class="social twitter" target="blank" href="https://twitter.com/">Twitter</a>
+                           href="https://www.zhihu.com">知乎</a>
+                        <a class="social github" target="blank" href="https://github.com/Xiant999/X-Blog">Github</a>
                     </div>
                 </div>
             </div>
@@ -18,10 +16,10 @@
                     <div class="meta-item meta-copyright">
                         <div class="meta-copyright-info">
                             <a href="/" class="info-logo">
-                                <img src="http://cdn.tycoding.cn/tumo-logo.png" alt="Tumo Blog">
+                                <SvgIcon iconClass="Blog"/>&nbsp;X-Blog
                             </a>
                             <div class="info-text">
-                                <p>银河街角，时光路口.</p>
+                                <p>不要996 不要404 不要251</p>
                                 <p>Powered by <a href="#" target="_blank" rel="nofollow">Apache & Think PHP</a>
                                 </p>
                                 <p>&copy; 2020 <a href="#">Xian & Tao</a></p>
@@ -75,9 +73,11 @@
 <script>
     import {findAllComments} from '@/api/comments'
     import {findAllArticle} from '@/api/article'
+    import SvgIcon from '@/components/SvgIcon/'
 
     export default {
         name: "Footer",
+        components: {SvgIcon},
         data() {
             return {
                 articleList: null,

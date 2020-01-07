@@ -39,7 +39,7 @@ service.interceptors.response.use(
         const res = response.data;
         if (res.code !== 20000) {
             Message({
-                message: res.data || 'response error',
+                message: res.data,
                 type: 'error',
                 duration: 5 * 1000
             });
@@ -68,7 +68,7 @@ service.interceptors.response.use(
     error => {
         console.log('err' + error);// for debug
         Message({
-            message: error.data || 'response error',
+            message: error.data,
             type: 'error',
             duration: 5 * 1000
         });

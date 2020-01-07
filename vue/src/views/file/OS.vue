@@ -179,17 +179,19 @@
                             flag = 'error'
                         }
                         this.$message({
+                            showClose: true,
                             type: flag,
                             message: response.data,
-                            duration: 6000
+                           duration: 3000
                         });
                         this.getList();
                     });
                 }).catch(() => {
                     this.$message({
+                        showClose: true,
                         type: 'info',
                         message: '已取消删除',
-                        duration: 6000
+                       duration: 3000
                     });
                 });
             },

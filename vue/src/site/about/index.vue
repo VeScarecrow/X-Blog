@@ -11,24 +11,36 @@
                 <header>
                     <div class="hello"><span>Hi! </span> We are Xian&Tao.</div>
                 </header>
-                <label>We're Developers with an enduring interest in Coding and Write Blog.</label>
+                <label>We're Developers with an enduring interest in Coding and Writing Blog.</label>
                 <br/>
                 <br/>
                 <h1>About</h1>
-<!--                <p style="margin-bottom: 10px;">Hi! 你好，我是TyCoding, 菜鸡一枚。</p>-->
-<!--                <p>喜欢运动， 音乐</p>-->
-<!--                <br/>-->
+                <p style="font-size: 15px">&#8594; From&nbsp;JMU&nbsp;SoftWare1712</p>
                 <h1>Works</h1>
-<!--                <ul>-->
-<!--                    <li><a href="https://github.com/TyCoding/tumo">Tumo Blog:</a> 炒鸡漂亮的Java博客系统，基于SpringBoot-2.x实现</li>-->
-<!--                    <li><a href="https://github.com/TyCoding/springboot-seckill">springboot-seckill:</a>基于SpringBoot-2.x的Java高并发Seckill秒杀系统实现</li>-->
-<!--                    <li><a href="https://github.com/TyCoding/spring-boot">spring-boot:</a> SpringBoot-2.x入门开发</li>-->
-<!--                    <li><a href="https://github.com/TyCoding/ssm-redis-solr">ssm-redis-solr:</a>基于SSM、Shiro、Redis、Solr框架简单实现电商项目中搜索功能</li>-->
-<!--                    <li><a href="https://github.com/TyCoding/ssm">ssm:</a> Spring、SpringMVC、Mybatis框架整合开发</li>-->
-<!--                </ul>-->
+                <ul>
+                    <li><a href="https://github.com/Xiant999/AirSystem" target="_blank">AirSystem : </a>
+                        基于VueJs+ElemenUI+SSM+Shiro的航空票务管理系统（前后台）
+                    </li>
+                    <li><a href="https://github.com/Xiant999/SpringAll" target="_blank">SpringAll : </a>循序渐进，学习Spring
+                        Boot、Spring Boot & Shiro、Spring Cloud、Spring Security & Spring Security OAuth2 ,
+                        博客Spring系列源码
+                    </li>
+                    <li><a href="https://github.com/Xiant999/ssm-redis-solr" target="_blank">SSM-Redis-Solr : </a>
+                        整合SSM+Redis+Solr+Shiro框架，结合Vue.js+ElementUI简单实现搜索功能
+                    </li>
+                    <li><a href="https://github.com/Xiant999/Interactive-design-notes" target="_blank">Interactive-design-notes : </a>
+                        简约至上：交互式设计四策略（Simple and Usable Web,Mobile, and Interaction Design）笔记
+                    </li>
+                    <li><a href="https://github.com/Xiant999/LeetCode" target="_blank">LeetCode : </a> LeetCode Solutions
+                        by ALL programming language
+                    </li>
+                    <li><a href="https://github.com/VeScarecrow/Hi-Dancer" target="_blank">Hi-Dancer : </a>Hi! Dancer! Follow my
+                        posture!
+                    </li>
+                </ul>
                 <br/>
                 <h1>Concat</h1>
-<!--                <img src="http://cdn.tycoding.cn/qq.png">-->
+
             </div>
         </article>
 
@@ -40,9 +52,10 @@
 <script>
     import {findAll} from '@/api/links'
     import Comments from './components/Comments.vue'
+
     export default {
         name: "index",
-        components: { Comments },
+        components: {Comments},
         data() {
             return {
                 list: null,
@@ -84,7 +97,7 @@
         font-weight: 800;
     }
 
-    article[role="pge-title-content"] header .hello{
+    article[role="pge-title-content"] header .hello {
         font-size: 46px;
         line-height: 53px;
         color: #404040;
@@ -92,7 +105,7 @@
         margin-top: 30px;
     }
 
-    article[role="pge-title-content"] header .hello span{
+    article[role="pge-title-content"] header .hello span {
         display: block;
         font-size: 80px;
         color: #fb5353;
@@ -134,6 +147,7 @@
     .el-submenu[role="8"] .el-submenu__title {
         color: #409EFF;
     }
+
     .el-submenu[role="8"] .el-submenu__title:hover {
         color: #409EFF;
     }

@@ -1,20 +1,23 @@
 <template>
     <div>
-        <el-card class="card-category">
+        <el-card class="card-category" shadow="hover">
             <div slot="header">
                 <span>分类列表</span>
-                <el-button type="info"
+                <el-button type="success"
                            style="float: right;padding: 7px 1pc 6px 17px;color:#fff" @click="dialogVisible = true">添加
                 </el-button>
             </div>
             <!-- 列表 -->
-            <el-table ref="category" :data="list" border tooltip-effect="dark" style="width: 100%">
-                <el-table-column prop="id" align="center" sortable label="编号" show-overflow-tooltip width="80"></el-table-column>
+            <el-table ref="category" :data="list" border tooltip-effect="dark"
+                      style="width: 100%" max-height="420" size="medium">
+                <el-table-column prop="id" align="center" sortable label="编号" show-overflow-tooltip width="80"/>
                 <el-table-column min-width="300px" label="分类名称">
                     <template slot-scope="scope">
                         <template v-if="scope.row.edit">
                             <el-input v-model="scope.row.name" class="edit-input" size="mini"/>
-                            <el-button class="cancel-btn" size="mini" icon="el-icon-refresh" type="warning" @click="cancelEdit(scope.row)">cancel</el-button>
+                            <el-button class="cancel-btn" size="mini" icon="el-icon-refresh" type="warning"
+                                       @click="cancelEdit(scope.row)">取消
+                            </el-button>
                         </template>
                         <span v-else>{{ scope.row.name }}</span>
                     </template>
@@ -22,16 +25,22 @@
 
                 <el-table-column align="center" label="操作" width="220">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.edit" type="success" size="mini" icon="el-icon-circle-check-outline" @click="confirmEdit(scope.row)">Ok</el-button>
-                        <el-button v-else type="primary" size="mini" icon="el-icon-edit" @click="scope.row.edit=!scope.row.edit">Edit</el-button>
-                        <el-button icon="el-icon-delete" size="mini" type="danger" @click="handleDelete(scope.row.id)"></el-button>
+                        <el-button v-if="scope.row.edit" type="success" size="mini" icon="el-icon-circle-check-outline"
+                                   @click="confirmEdit(scope.row)">确认
+                        </el-button>
+                        <el-button v-else type="primary" size="mini" icon="el-icon-edit"
+                                   @click="scope.row.edit=!scope.row.edit">编辑
+                        </el-button>
+                        <el-button icon="el-icon-delete" size="mini" type="danger"
+                                   @click="handleDelete(scope.row.id)">删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
 
             <!-- 分页 -->
             <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageCode" :limit.sync="listQuery.pageSize"
-                        @pagination="getList"/>
+                        @pagination="getList" :pageSizes="[6,12,16,20]"/>
         </el-card>
 
         <!-- 分类添加 -->
@@ -51,7 +60,7 @@
 </template>
 
 <script>
-    import { findByPage,deleteById,save,update } from '@/api/category'
+    import {findByPage, deleteById, save, update} from '@/api/category'
     import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
     export default {
         name: "Category",
@@ -86,69 +95,88 @@
             this.getList()
         },
         methods: {
-            getList() {
-                this.listLoading = true
+            getList(arg) {
+                this.listLoading = true;
+                this.refreshList(arg);
+            },
+            refreshList(arg) {
+                if (arg) {
+                    this.listQuery.pageCode = arg.page;
+                    this.listQuery.pageSize = arg.limit;
+                }
                 findByPage(this.listQuery.pageCode, this.listQuery.pageSize).then(response => {
                     this.total = response.data.total;
-                    const items = response.data
-
+                    const items = response.data;
                     this.list = items.rows.map(v => {
-                        this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
+                        this.$set(v, 'edit', false);
                         return v
-                    })
+                    });
                     this.listLoading = false
                 })
             },
             cancelEdit(row) {
-                row.edit = false
+                row.edit = false;
                 this.$message({
-                    message: 'The name has been restored to the original value',
+                    showClose: true,
+                    message: '已取消编辑',
                     type: 'warning'
                 })
             },
             confirmEdit(row) {
-                row.edit = false
-                this.editor = row
+                row.edit = false;
+                this.editor = row;
                 update(this.editor).then(response => {
-                    var flag = 'success';
-                    if (response.code != 20000) {
-                        flag = 'error'
+                    if (response.code === 20000) {
+                        this.$message({
+                            showClose: true,
+                            type: 'success',
+                            message: '更新成功',
+                            duration: 3000
+                        });
+                    } else {
+                        this.$message({
+                            showClose: true,
+                            type: 'error',
+                            message: response.data,
+                            duration: 3000
+                        });
                     }
-                    this.$message({
-                        type: flag,
-                        message: response.data,
-                        duration: 6000
-                    });
                     this.getList();
                     this.editor = {}
                 });
             },
-            handleDelete(id){
+            handleDelete(id) {
                 this.$confirm('你确定永久删除此分类信息？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
                     center: true
                 }).then(() => {
-                    var ids = [];
+                    let ids = [];
                     ids.push(id);
                     deleteById(ids).then(response => {
-                        var flag = 'success';
-                        if (response.code != 20000) {
-                            flag = 'error'
+                        if (response.code === 20000) {
+                            this.$message({
+                                showClose: true,
+                                type: 'success',
+                                message: '删除成功',
+                                duration: 3000
+                            });
+                        } else {
+                            this.$message({
+                                showClose: true,
+                                type: 'error',
+                                message: response.data,
+                                duration: 3000
+                            });
                         }
-                        this.$message({
-                            type: flag,
-                            message: response.data,
-                            duration: 6000
-                        });
-                        this.getList();
                     });
                 }).catch(() => {
                     this.$message({
+                        showClose: true,
                         type: 'info',
                         message: '已取消删除',
-                        duration: 6000
+                        duration: 3000
                     });
                 });
             },
@@ -160,18 +188,18 @@
                             title: '成功',
                             message: response.data,
                             type: 'success',
-                            duration: 2000
+                            duration: 3000
                         });
                         this.editor = {};
-                        this.getList();
                     } else {
                         this.$notify({
                             title: '失败',
                             message: response.data,
                             type: 'warning',
-                            duration: 2000
+                            duration: 3000
                         });
                     }
+                    this.getList();
                 })
             },
             handleClose() {
@@ -185,6 +213,7 @@
     .edit-input {
         padding-right: 100px;
     }
+
     .cancel-btn {
         position: absolute;
         right: 15px;

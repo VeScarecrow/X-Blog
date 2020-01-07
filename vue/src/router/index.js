@@ -139,7 +139,7 @@ export const constantRouterMap = [
         component: Layout,
         children: [
             {
-                path: 'https://github.com/TyCoding/tumo-vue',
+                path: 'https://github.com/Xiant999/X-Blog',
                 meta: {title: 'github', icon: 'github'}
             }
         ]

@@ -1,5 +1,7 @@
 import request from '@/utils/request'
 
+export const UPLOAD_URL = 'http://xcoding.com:8080/storage/upload';
+
 export function domain() {
     return request({
         url: '/qiniu/domain',
