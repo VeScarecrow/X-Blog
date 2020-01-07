@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+
 // findByPage,deleteById,save,update
 export function findArchives() {
     return request({
@@ -53,6 +54,16 @@ export function deleteById(ids) {
         url: '/category/delete',
         method: 'post',
         data: ids
+    })
+}
+
+export function findByName(title) {
+    return request({
+        url: '/category/findByName',
+        method: 'get',
+        params: {
+            title
+        }
     })
 }
 

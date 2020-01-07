@@ -15,31 +15,50 @@ use think\Db;
 use think\model\Collection;
 
 /**
- * Class ArticleController 文章管理接口
+ * 文章管理接口
+ * Class ArticleController
  * @package app\admin\controller
+ * @author xian
  */
 class ArticleController extends Controller
 {
+    /**
+     * 查询评论总数
+     * @param int $article_id 文章id
+     * @return \think\response\Json
+     */
     public function findCountByArticleId($article_id)
     {
         try {
             $article = Article::get($article_id);
-            return json(Result::success($article->comments->count())->toJson());
+            if ($article != null) {
+                return json(Result::success($article->comments->count())->toJson());
+            } else {
+                return json(Result::success(0)->toJson());
+            }
         } catch (\Exception $e) {
-            Db::rollback();
             return json(Result::innerError()->toJson());
         }
     }
 
+    /**
+     * 有限查询
+     * @return \think\response\Json
+     */
     public function findAll()
     {
         try {
-            return json(Result::success(Article::order('publish_time desc')->limit(8)->select())->toJson());
+            return json(Result::success($this->toFrontArr(Article::order('publish_time desc')
+                ->limit(8)->field(['id', 'eye_count', 'title'])->select()))->toJson());
         } catch (\Exception $e) {
             return json(Result::innerError()->toJson());
         }
     }
 
+    /**
+     * 查询总数
+     * @return \think\response\Json
+     */
     public function findAllCount()
     {
         try {
@@ -50,23 +69,52 @@ class ArticleController extends Controller
     }
 
 
-    public function findByPage($pageCode = 1, $pageSize = 10)
+    /**
+     * 分页查询，可附带其他条件
+     * @param int $pageCode 页码
+     * @param int $pageSize 每页数量
+     * @param string $begin_time 开始时间
+     * @param string $end_time 结束时间
+     * @param string $title 文章标题/作者名称
+     * @return \think\response\Json
+     */
+    public function findByPage($pageCode = 1, $pageSize = 10, $begin_time = '', $end_time = '', $title = '')
     {
         try {
-            if (input('?param.beginTime') && input('?param.endTime')) {
-                $list = Article::whereRaw("publish_time between :st and :ed", ['st' => input('param.beginTime'), 'ed' => input('param.endTime')])
-                    ->paginate($pageSize, false, ['page' => $pageCode]);
+            if (input('param.site') == 'fronted') {
+                $list = Article::whereRaw('UNIX_TIMESTAMP(publish_time) <= :t and state like \'2\'', ['t' => time()])->paginate($pageSize, false, ['page' => $pageCode]);;
+                $bind_list = $this->toFrontArr($list->items());
+                $pageBean = new PageBean($list->total(), $bind_list);
+                return json(Result::success($pageBean->toJson())->toJson());
+            } else if (input('param.site') == 'backed') {
+                $article = model('common/Article');//date('Y-m-d H:i:s', $begin_time)
+                $list = $article->paginate($pageSize, false, ['page' => $pageCode]);
+                if (!empty($begin_time) && !empty($end_time)) {
+                    $list = $article->whereBetweenTime('edit_time', $begin_time, $end_time)
+                        ->paginate($pageSize, false, ['page' => $pageCode]);
+                }
+                if (!empty($title)) {
+                    $list = $article->whereOr([
+                        ['title', 'like', '%' . $title . '%'],
+                        ['author', 'like', '%' . $title . '%']
+                    ])->paginate($pageSize, false, ['page' => $pageCode]);
+                }
+                $bind_list = $this->toFrontArr($list->items());
+                $pageBean = new PageBean($list->total(), $bind_list);
+                return json(Result::success($pageBean->toJson())->toJson());
             } else {
-                $list = model('common/Article')->paginate($pageSize, false, ['page' => $pageCode]);
+                return json(Result::parError()->toJson());
             }
-            $bind_list = $this->toFrontArr($list->items());
-            $pageBean = new PageBean($list->total(), $bind_list);
-            return json(Result::success($pageBean->toJson())->toJson());
         } catch (\Exception $e) {
             return json(Result::innerError()->toJson());
         }
     }
 
+    /**
+     * 通过id查询
+     * @param int $id id
+     * @return \think\response\Json
+     */
     public function findById($id)
     {
         try {
@@ -78,7 +126,8 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param string $title 前台api
+     * 前台api，文章搜索
+     * @param string $title 文章标题
      * @return \think\response\Json
      */
     public function search($title)
@@ -94,12 +143,16 @@ class ArticleController extends Controller
         }
     }
 
+    /**
+     * 通过id删除
+     * @return \think\response\Json
+     */
     public function deleteById()
     {
         try {
-            $ids = input('post.ids');
-            if (!is_array($ids)) {
-                $ids = array($ids);
+            $ids = input('post.');
+            if (!is_array($ids) || empty($ids)) {
+                return json(Result::parError()->toJson());
             }
             Db::startTrans();
             foreach ($ids as $id) {
@@ -117,6 +170,10 @@ class ArticleController extends Controller
         }
     }
 
+    /**
+     * 文章分类（依据时间'Y-m'）
+     * @return \think\response\Json
+     */
     public function findArchives()
     {
         try {
@@ -144,11 +201,19 @@ class ArticleController extends Controller
         }
     }
 
+    /**
+     * 新增文章
+     * @return \think\response\Json
+     */
     public function save()
     {
         return $this->updateArticleCategoryTags('save');
     }
 
+    /**
+     * 更新文章
+     * @return \think\response\Json
+     */
     public function update()
     {
         return $this->updateArticleCategoryTags('update');
@@ -157,7 +222,7 @@ class ArticleController extends Controller
     /**
      * 模型/数据集转换json
      * @param mixed $data 数据
-     * @return array 数组
+     * @return array 封装的数组
      */
     public function toFrontArr($data)
     {
@@ -181,16 +246,13 @@ class ArticleController extends Controller
 
     /** 关联 C & U
      * @param string $method 传入方法名称 save/update
-     * @return \think\response\Json json数据
+     * @return \think\response\Json
      */
-    public function updateArticleCategoryTags($method)
+    private function updateArticleCategoryTags($method)
     {
-        //        if (!request()->isAjax()) {
-        //            return json(Result::methodError()->toJson());
-        //        }
-//        try {
+        try {
             $input = input('post.');
-            if (input('?post.state') && input('post.state') == 'published') {
+            if (input('?post.state') && input('post.state') == 'published' || input('post.publish_time') == '') {
                 //发布时间
                 $input['publish_time'] = time();
             }
@@ -229,10 +291,10 @@ class ArticleController extends Controller
             }
             Db::commit();
             return json(Result::success()->toJson());
-//        } catch (\Exception $e) {
-//            Db::rollback();
-//            return json(Result::innerError()->toJson());
-//        }
+        } catch (\Exception $e) {
+            Db::rollback();
+            return json(Result::innerError()->toJson());
+        }
     }
 
 }

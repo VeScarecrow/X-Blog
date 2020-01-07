@@ -45,6 +45,7 @@
                 return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)
             },
             handleSubmit() {
+                console.log('handleSubmit');
                 const arr = Object.keys(this.listObj).map(v => this.listObj[v])
                 if (!this.checkAllSuccess()) {
                     this.$message('请等待所有图片上传成功 或 出现了网络问题，请刷新页面重新上传！')
@@ -56,11 +57,12 @@
                 this.dialogVisible = false
             },
             handleSuccess(response, file) {
+                console.log('handleSuccess');
                 const uid = file.uid
                 const objKeyArr = Object.keys(this.listObj)
                 for (let i = 0, len = objKeyArr.length; i < len; i++) {
                     if (this.listObj[objKeyArr[i]].uid === uid) {
-                        this.listObj[objKeyArr[i]].url = response.files.file
+                        this.listObj[objKeyArr[i]].url = response.data
                         this.listObj[objKeyArr[i]].hasSuccess = true
                         return
                     }
@@ -77,6 +79,7 @@
                 }
             },
             beforeUpload(file) {
+                console.log('beforeUpload');
                 const _self = this
                 const _URL = window.URL || window.webkitURL
                 const fileName = file.uid

@@ -12,7 +12,7 @@
                                         <a :href="'/article/' + entity.id" v-text="entity.title"/>
                                     </div>
                                     <div class="item-meta clearfix">
-                                        <div class="item-meta-date">发布于 {{entity.publishTime}}</div>
+                                        <div class="item-meta-date">发布于 {{entity.publish_time}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
         name: "index",
         data() {
             return {
-                list: null
+                list: []
             }
         },
         created() {

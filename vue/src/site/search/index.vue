@@ -11,7 +11,7 @@
                             <div class="post-list-item-container">
                                 <div class="item-label">
                                     <div class="item-title">
-                                        <router-link to="'/article/' + item.id" v-text="item.title"/>
+                                        <router-link :to="'/article/' + item.id" v-text="item.title"/>
                                     </div>
                                     <div class="item-meta clearfix">
                                         <div class="item-meta-date">发布于 {{item.publish_time}}

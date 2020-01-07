@@ -36,7 +36,7 @@ export function save(obj) {
 export function update(obj) {
     return request({
         url: '/tags/update',
-        method: 'put',
+        method: 'post',
         data: obj
     })
 }

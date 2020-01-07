@@ -1156,7 +1156,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .post-data, .post-data a {
-    font-size: 12px;
+    font-size: 13px;
     color: #5f5f5f
 }
 
@@ -1554,7 +1554,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 #directory > ul > li::before {
     position: relative;
     top: 0;
-    left: -4px;
+    /*left: -4px;*/
     display: inline-block;
     width: 7px;
     height: 7px;

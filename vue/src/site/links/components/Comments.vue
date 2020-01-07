@@ -21,7 +21,7 @@
                     <div :id="'comment-' + comment.parent.id">
                         <div class="comment-view">
                             <div class="comment-header">
-                                <img class="avatar" src="http://cdn.tycoding.cn/author.png" width="80" height="80">
+                                <img class="avatar" src="" width="80" height="80">
                                 <span class="comment-author">
                                     <a :href="comment.parent.url" target="_blank" rel="external nofollow"
                                        v-text="comment.parent.author"/>
@@ -47,7 +47,7 @@
                                 <div :id="'comment-' + item.id">
                                     <div class="comment-view">
                                         <div class="comment-header">
-                                            <img class="avatar" src="http://cdn.tycoding.cn/author.png" width="80"
+                                            <img class="avatar" src="" width="80"
                                                  height="80">
                                             <span class="comment-author comment-by-author">
                                                 <a :href="item.url" target="_blank" rel="external nofollow"

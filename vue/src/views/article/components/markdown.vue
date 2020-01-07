@@ -59,8 +59,6 @@
                  * url: "http://xxx/1078872379626291200.png"
                  * width: 141
                  */
-                console.log(arr);
-                const _this = this;
                 arr.forEach(v => {
                     if (v.hasSuccess) {
                         this.md += '![](' + v.url + ')';
@@ -81,9 +79,9 @@
     }
     .editor-custom-btn-container {
         position: absolute;
-        right: 4px;
-        top: 4px;
-        /*z-index: 2005;*/
+        right: 1px;
+        top: 1px;
+        line-height: 30px;
         .tips {
             margin-right: 5px;
             font-size: 10px;
