@@ -8,6 +8,7 @@ use app\common\dto\Result;
 use app\common\model\User;
 use think\Controller;
 use think\Exception;
+use app\common\validate\UserValidate;
 
 class UserController extends Controller
 {

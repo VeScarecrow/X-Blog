@@ -13,6 +13,7 @@ use think\Controller;
 use app\common\model\Article;
 use think\Db;
 use think\model\Collection;
+use app\common\validate\ArticleValidate;
 
 /**
  * Class ArticleController 文章管理接口
@@ -22,6 +23,8 @@ class ArticleController extends Controller
 {
     public function findCountByArticleId($article_id)
     {
+        $data['article_id'] = $article_id;
+        $validate = new ArticleValidate;
         try {
             $article = Article::get($article_id);
             return json(Result::success($article->comments->count())->toJson());
@@ -52,6 +55,7 @@ class ArticleController extends Controller
 
     public function findByPage($pageCode = 1, $pageSize = 10)
     {
+
         try {
             if (input('?param.beginTime') && input('?param.endTime')) {
                 $list = Article::whereRaw("publish_time between :st and :ed", ['st' => input('param.beginTime'), 'ed' => input('param.endTime')])

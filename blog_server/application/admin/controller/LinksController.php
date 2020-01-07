@@ -9,6 +9,7 @@ use app\common\model\Category;
 use app\common\model\Links;
 use think\Controller;
 use think\Db;
+use app\common\validate\LinksValidate;
 
 class LinksController extends Controller
 {

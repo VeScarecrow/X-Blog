@@ -11,6 +11,7 @@ use app\common\model\Links;
 use app\common\model\Tags;
 use think\Controller;
 use think\Db;
+use app\common\validate\TagsValidate;
 
 class TagsController extends Controller
 {

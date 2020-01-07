@@ -12,6 +12,7 @@ use app\common\model\Comments;
 use app\common\model\Links;
 use think\Controller;
 use think\Db;
+use app\common\validate\CommentsValidate;
 
 class CommentsController extends Controller
 {
@@ -48,6 +49,8 @@ class CommentsController extends Controller
 
     public function findCommentsList($articleId, $sort = 0, $pageCode = 1, $pageSize = 10)
     {
+
+
         try {
             Db::startTrans();
             //查询该文章的所有父级留言信息
@@ -92,6 +95,7 @@ class CommentsController extends Controller
         }
     }
 
+
     public function deleteById()
     {
         try {
@@ -108,6 +112,4 @@ class CommentsController extends Controller
             return json(Result::innerError()->toJson());
         }
     }
-
-
 }

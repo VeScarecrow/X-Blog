@@ -10,6 +10,7 @@ use app\common\model\Article;
 use app\common\model\Category;
 use think\Controller;
 use think\Db;
+use app\common\validate\CategoryValidate;
 
 class CategoryController extends Controller
 {
@@ -50,6 +51,7 @@ class CategoryController extends Controller
 
     public function save()
     {
+
         try {
             $name = input('post.name');
             if (Category::where('name', 'like', $name)->count() == 0) {
@@ -64,6 +66,7 @@ class CategoryController extends Controller
 
     public function update()
     {
+
         try {
             $name = input('post.name');
             if (Category::where('name', 'like', $name)->count() == 0) {

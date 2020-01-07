@@ -17,7 +17,7 @@ return [
     // 数据库名
     'database'        => 'xian',
     // 用户名
-    'username'        => 'root',
+    'username'        => 'czt',
     // 密码
     'password'        => '123456',
     // 端口
