@@ -27,7 +27,7 @@ class CommentsController extends Controller
     public function findAll()
     {
         try {
-            $list = Comments::limit(10)->field(['id','content','author','time'])->select();
+            $list = Comments::limit(10)->field(['id', 'content', 'author', 'time','article_id'])->select();
             return json(Result::success($list)->toJson());
         } catch (\Exception $e) {
             return json(Result::innerError()->toJson());

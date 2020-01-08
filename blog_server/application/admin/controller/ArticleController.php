@@ -32,6 +32,7 @@ class ArticleController extends Controller
     {
         $data['article_id'] = $article_id;
         $validate = new ArticleValidate;
+
         try {
             $article = Article::get($article_id);
             if ($article != null) {
