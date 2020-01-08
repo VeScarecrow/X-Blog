@@ -111,6 +111,8 @@
                         return v
                     });
                     this.listLoading = false
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             getList(arg) {
@@ -204,6 +206,8 @@
                             duration: 3000
                         });
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             handleClose() {

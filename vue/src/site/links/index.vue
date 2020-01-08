@@ -54,6 +54,8 @@
                         this.list = response.data;
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
         }

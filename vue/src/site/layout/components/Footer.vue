@@ -95,12 +95,16 @@
                     if (response.code === 20000) {
                         this.articleList = response.data;
                     }
+                }).catch(err => {
+                    console.log(err);
                 });
                 findAllComments().then(response => {
                     if (response.code === 20000) {
                         this.commentsList = response.data;
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 });
             },
         },

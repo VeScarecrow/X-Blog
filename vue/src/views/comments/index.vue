@@ -77,6 +77,8 @@
                         this.total = response.data.total;
                         this.loading = false;
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
 
@@ -106,6 +108,8 @@
                             });
                         }
                         this.getList();
+                    }).catch(err => {
+                        console.log(err);
                     });
                 }).catch(() => {
                     this.$message({

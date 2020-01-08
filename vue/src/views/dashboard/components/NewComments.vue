@@ -50,6 +50,8 @@
                     if (response.code === 20000) {
                         this.list = response.data
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             }
         }

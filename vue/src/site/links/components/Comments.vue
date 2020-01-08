@@ -148,6 +148,8 @@
                         this.total = response.data.total;
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             reply(author, pId, cId) {
@@ -175,6 +177,8 @@
                     this.comments.url = '';
                     this.holder = '回复';
                     this.findCommentsList();
+                }).catch(err => {
+                    console.log(err);
                 });
             }
         },

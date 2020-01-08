@@ -60,7 +60,7 @@
                 </el-table-column>
             </el-table>
 
-            <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageCode" :limit.sync="listQuery.pageSize"
+            <pagination v-show="this.total>0" :total="this.total" :page.sync="listQuery.pageCode" :limit.sync="listQuery.pageSize"
                         @pagination="getList"/>
         </el-card>
     </div>
@@ -73,7 +73,6 @@
     export default {
         name: 'index',
         components: {Pagination},
-        total: 0,
         filters: {
             statusFilter(status) {
                 const statusMap = {
@@ -86,6 +85,7 @@
         },
         data() {
             return {
+                total: 0,
                 editor: {
                     name: '',
                     url: '',
