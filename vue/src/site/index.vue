@@ -91,6 +91,8 @@
                         this.total = Math.ceil(response.data.total/this.listQuery.pageSize);
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             //去掉所有的html标记

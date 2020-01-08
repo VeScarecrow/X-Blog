@@ -112,6 +112,8 @@
                         return v
                     });
                     this.listLoading = false
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             cancelEdit(row) {
@@ -143,6 +145,8 @@
                     }
                     this.getList();
                     this.editor = {}
+                }).catch(err => {
+                    console.log(err);
                 });
             },
             handleDelete(id) {
@@ -170,6 +174,8 @@
                                 duration: 3000
                             });
                         }
+                    }).catch(err => {
+                        console.log(err);
                     });
                 }).catch(() => {
                     this.$message({
@@ -200,6 +206,8 @@
                         });
                     }
                     this.getList();
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             handleClose() {

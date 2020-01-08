@@ -50,6 +50,8 @@
                         this.total = response.data.total;
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             refushFlag(val) {

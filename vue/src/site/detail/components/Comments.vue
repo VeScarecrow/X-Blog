@@ -84,7 +84,7 @@
                     </li>
                     <li v-for="i in total">
                         <router-link :style="i == listQuery.pageCode ? 'color: #eb5055;' : ''"
-                                     :to="'?cp=' + i + '#comments'" v-text="i" />
+                                     :to="'?cp=' + i + '#comments'" v-text="i"/>
                     </li>
                     <li class="next" v-if="listQuery.pageCode < total">
                         <router-link
@@ -138,7 +138,9 @@
         watch: {
             $route(to, from) {
                 // console.log('经过了');
-                this.listQuery.pageCode = getUrlKey('cp');
+                if (getUrlKey('cp') !== null) {
+                    this.listQuery.pageCode = getUrlKey('cp');
+                }
                 this.findCommentsList();
             },
             detail: function (newVal, oldVal) {
@@ -162,6 +164,8 @@
                         this.total = response.data.total;
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             reply(author, pId, cId) {
@@ -200,6 +204,8 @@
                     this.comments.url = '';
                     this.holder = '回复';
                     this.findCommentsList();
+                }).catch(err => {
+                    console.log(err);
                 });
             }
         },

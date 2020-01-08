@@ -137,6 +137,8 @@
                         this.total = response.data.total;
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             reply(author, pId, cId){
@@ -169,6 +171,8 @@
                     this.holder = '回复';
                     this.findCommentsList();
                     this.listLoading = false;
+                }).catch(err => {
+                    console.log(err);
                 });
             }
         },

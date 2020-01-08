@@ -71,12 +71,16 @@
                             postDirectoryBuild(this.$refs.content)
                         }, 400);
                     }
+                }).catch(err => {
+                    console.log(err);
                 });
                 findCountByArticleId(this.id).then(response => {
                     if (response.code === 20000) {
                         this.commentCount = response.data;
                         this.listLoading = false
                     }
+                }).catch(err => {
+                    console.log(err);
                 })
             },
             backComments() {

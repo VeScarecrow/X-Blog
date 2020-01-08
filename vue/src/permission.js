@@ -27,8 +27,6 @@ router.beforeEach((to, from, next) => {
             }
         }
     } else { //若vuex中没有查询到用户登录信息
-        //设计：博客前端所有请求都是走的根路径，比如：localhost:8080  localhost:8080/about localhost:8080/article/1
-        //     而博客后台管理路径全都是走 localhost:8080/admin/ 路径下，比如 localhost:8080/admin/links  localhost:8080/admin/cover
         if (to.path.substring(1, to.path.indexOf('/', to.path.indexOf('/') + 1)) !== 'admin') {
             next()
         } else {
